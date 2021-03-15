@@ -1,0 +1,30 @@
+version: '3'
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+            - "80:80" # http
+            - "443:443" # https
+        volumes:
+            - ./hosts:/etc/nginx/conf.d # nginx hosts config
+            - ./www:/var/www # projects root
+            - ./logs:/var/log/nginx # nginx logs
+        links:
+            - php
+    php:
+        build: ./images/php
+        volumes:
+            - ./www:/var/www # projects root
+        links:
+            - mysql
+    mysql:
+        image: mysql:5
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_USER: user
+            MYSQL_DATABASE: default
+            MYSQL_PASSWORD: password
