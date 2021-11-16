@@ -2,6 +2,10 @@ version: '3'
 services:
     rabbitmq:
         image: rabbitmq:3-management
+        volumes:
+            - ./rabbitmq/etc/:/etc/rabbitmq/ # rabbitmq.conf
+            - ./rabbitmq/data/:/var/lib/rabbitmq/ # data
+            - ./rabbitmq/logs/:/var/log/rabbitmq/ # logs
         ports:
             - "5672:5672" # amqp
             - "15672:15672" # management
