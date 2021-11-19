@@ -33,6 +33,8 @@ services:
 
     mongo:
         image: mongo:${MONGO_TAG}
+        volumes:
+            - ./mongo/data/:/data/db/
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: root
@@ -47,6 +49,8 @@ services:
             ME_CONFIG_MONGODB_ADMINUSERNAME: root
             ME_CONFIG_MONGODB_ADMINPASSWORD: root
             ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+        depends_on:
+          - mongo
         networks:
             - example-network
 
