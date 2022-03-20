@@ -1,14 +1,11 @@
 version: '3'
 services:
     rabbitmq:
-        image: rabbitmq:${RABBITMQ_TAG}
-        volumes:
-            - ./rabbitmq/etc/:/etc/rabbitmq/ # rabbitmq.conf
-            - ./rabbitmq/data/:/var/lib/rabbitmq/ # data
-            - ./rabbitmq/logs/:/var/log/rabbitmq/ # logs
+        build: ./images/rabbitmq
+        hostname: my-rabbit
         ports:
-            - 5672:5672 # amqp
-            - 15672:15672 # management
+            - '5672:5672'
+            - '15672:15672'
         networks:
             - example-network
 
@@ -50,7 +47,7 @@ services:
             ME_CONFIG_MONGODB_ADMINPASSWORD: root
             ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
         depends_on:
-          - mongo
+            - mongo
         networks:
             - example-network
 
